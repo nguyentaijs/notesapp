@@ -14,8 +14,12 @@ import java.util.List;
 @CrossOrigin("*")
 public class NotesController {
 
-    @Autowired
     NotesRepository notesRepository;
+
+    @Autowired
+    public NotesController(NotesRepository notesRepository) {
+        this.notesRepository = notesRepository;
+    }
 
     @GetMapping("/notes")
     public ResponseEntity<List<Note>> readNotes () {
