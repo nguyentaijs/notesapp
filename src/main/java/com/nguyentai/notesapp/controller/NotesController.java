@@ -5,10 +5,7 @@ import com.nguyentai.notesapp.repository.NotesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,9 +17,13 @@ public class NotesController {
     @Autowired
     NotesRepository notesRepository;
 
-
     @GetMapping("/notes")
     public ResponseEntity<List<Note>> readNotes () {
         return new ResponseEntity<>(notesRepository.findAll(), HttpStatus.OK);
+    }
+
+    @PostMapping("/notes")
+    public ResponseEntity<Note> addNote(@RequestBody Note note) {
+        return new ResponseEntity<>(notesRepository.save(note), HttpStatus.CREATED);
     }
 }
