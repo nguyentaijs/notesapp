@@ -2,6 +2,7 @@ package com.nguyentai.notesapp.controller;
 
 import com.nguyentai.notesapp.entity.Note;
 import com.nguyentai.notesapp.repository.NotesRepository;
+import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,5 +30,16 @@ public class NotesController {
     @PostMapping("/notes")
     public ResponseEntity<Note> addNote(@RequestBody Note note) {
         return new ResponseEntity<>(notesRepository.save(note), HttpStatus.CREATED);
+    }
+
+    @GetMapping("/notes/{id}")
+    public ResponseEntity<Note> readNote(@PathVariable Long id) {
+        return new ResponseEntity<>(notesRepository.findById(id).get(), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/notes/{id}")
+    public ResponseEntity<Note> deleteNote(@PathVariable Long id) {
+        notesRepository.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
